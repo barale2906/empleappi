@@ -8,9 +8,9 @@ app.use(express.json()); // Middleware para parsear JSON
 // Ruta de ejemplo para crear un usuario
 app.post('/users', async (req: Request, res: Response) => {
   try {
-    const { username, email } = req.body;
+    const { username, email, password } = req.body;
 
-    const user = await User.create({ username, email });
+    const user = await User.create({ username, email, password });
     res.status(201).json(user);
     //res.send('creando usuarios');
   } catch (error) {
@@ -23,7 +23,7 @@ app.get('/', async (req: Request, res: Response) =>{
 });
 
 // Sincronizar la base de datos y levantar el servidor
-sequelize.sync({ force: true })
+sequelize.sync()
   .then(() => {
     console.log('Base de datos sincronizada');
     app.listen(3000, () => {
